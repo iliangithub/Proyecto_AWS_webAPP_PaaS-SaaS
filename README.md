@@ -563,3 +563,5 @@ y ya en teoría está todo, creamos el beanstalk y si vemos el enlace:
 >[!IMPORTANT]
 >Me da error:
 >
+>![image](https://github.com/user-attachments/assets/78fd74ca-6229-46d8-b0bd-bd51fd8a580a)
+
