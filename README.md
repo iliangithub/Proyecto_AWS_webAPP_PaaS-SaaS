@@ -480,11 +480,13 @@ Vamos a recordar por un momento en "delta", cuando teníamos la instancia TomCat
 - Lanzamos la instancia e instalamos TomCat.
 - Creamos un "Target group", load balancer y todo bien, una AMI... etc, etc...
 
-Entonces, **Cuando creamos un "beanstalk enviroment", seleccionamos TomCat y pues nos proporciona todo lo anterior. Un Autoscaling group, AMI, S3 bucket for the artifact, CloudWatch monitoring Logs, y es muy fácil cambiar los ajustes cuando quieras y el despliegue es muy fácil.
+Entonces, **Cuando creamos un "beanstalk enviroment", seleccionamos TomCat y pues nos proporciona todo lo anterior.** Un Autoscaling group, AMI, S3 bucket for the artifact, CloudWatch monitoring Logs, y es muy fácil cambiar los ajustes cuando quieras y el despliegue es muy fácil.
 
-Lo primero es crear roles IAM.
+Lo primero es crear roles IAM para Beanstalk.
 
 ### 8.8.1 IAM, crear rol.
+
+En la barra de navegació buscamos IAM:
 
 - Tipo de entidad de confianza: `servicio de AWS`.
 - Servicio o caso de uso: `EC2`
@@ -564,4 +566,9 @@ y ya en teoría está todo, creamos el beanstalk y si vemos el enlace:
 >Me da error:
 >
 >![image](https://github.com/user-attachments/assets/78fd74ca-6229-46d8-b0bd-bd51fd8a580a)
+>
+>Ahora, estoy viendo este error:
+>![image](https://github.com/user-attachments/assets/43bdf66b-e7fd-48cc-967f-fe7d19d6e10a)
+>
+
 
