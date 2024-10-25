@@ -488,7 +488,7 @@ Lo primero es crear roles IAM para Beanstalk.
 
 En la barra de navegació buscamos IAM:
 
-- Tipo de entidad de confianza: `servicio de AWS`.
+- Tipo de entidad de confianza: `Servicio de AWS`.
 - Servicio o caso de uso: `EC2`
 - Caso de uso: `EC2`
 
@@ -501,38 +501,44 @@ Agregar permisos:
 - Name: `epsilon-rearch-beanstalk-role`
 - Description: `epsilon-rearch-beanstalk-role`
 
+![image](https://github.com/user-attachments/assets/deef5304-80af-41c3-a543-2833c4527d22)
+
 ### 8.8.2 Beanstalk, creación.
+Buscamos en la barra de navegación, "Elastic BeanStalk".
 
-Le damos a create application.
+Le damos a **Crear Aplicación**.
 
-- Nivel de entorno: Entorno de servidor web
+> #### PASO 1. Configuración del entorno.
+> - Nivel de entorno: `Entorno de servidor web`
+>
+> Información de la aplicación:
+> - Nombre: `epsilon-rearch-beanapp`
+>
+>Información del entorno:
+>- Nombre del entorno: `Epsilon-rearch-beanapp-prod`
+>- Dominio: `epsilonrearch` (tiene que ser único)
+>
+>Tipo de plataforma
+>- Plataforma administrada
+>- Plataforma: `TomCat`
+>- Ramificación de la plataforma: Tomcat 10 with Correto 21 running...
+>- Versión: 5.3.3
+>
+>Código de aplicación
+>- Aplicación de ejemplo
+>
+>Valores preestablecidos
+>- Configuración personalizada
+>  
 
-Información de la aplicación:
-- Nombre: `epsilon-rearch-beanapp`
-
-Información del entorno:
-- Nombre del entorno: `Epsilon-rearch-beanapp-prod`
-- Dominio: `epsilonrearch` (tiene que ser único)
-
-Tipo de plataforma
-- Plataforma administrada
-- Plataforma: TomCat
-- Ramificación de la plataforma: Tomcat 10 with Correto 21 running...
-- Versión: 5.3.3
-
-Código de aplicación
-- Aplicación de ejemplo
-
-Valores preestablecidos
-- Configuración personalizada
-  
-SIGUIENTE
-
-Acceso al Servicio:
-Rol de servicio:
-- Crear y utilizar un nuevo rol de servicio
-- EC2 key pair: `epsilon-bean-key`
-- EC2 perfil de instancia: `epsilon-rearch-beanstalk-role`
+> #### PASO 2. Configuración del acceso al servicio.
+>
+>Acceso al Servicio:
+>- Rol de servicio: `Crear y utilizar un nuevo rol de servicio`
+>- Nombre del rol de servicio: "el que está por defecto" `aws-elasticbeanstalk-service-role`
+>- EC2 key pair: `epsilon-bean-key`
+>- EC2 perfil de instancia: `epsilon-rearch-beanstalk-role`
+**EL ROL QUE CREAMOS JUSTO EN EL 8.8.1**
 
 SIGUIENTE
 
