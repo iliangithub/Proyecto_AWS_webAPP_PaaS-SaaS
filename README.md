@@ -508,7 +508,9 @@ Buscamos en la barra de navegación, "Elastic BeanStalk".
 
 Le damos a **Crear Aplicación**.
 
-> #### PASO 1. Configuración del entorno.
+#### PASO 1. Configuración del entorno.
+
+> 
 > - Nivel de entorno: `Entorno de servidor web`
 >
 > Información de la aplicación:
@@ -531,7 +533,9 @@ Le damos a **Crear Aplicación**.
 >- Configuración personalizada
 >  
 
-> #### PASO 2. Configuración del acceso al servicio.
+#### PASO 2. Configuración del acceso al servicio.
+
+> 
 >
 >Acceso al Servicio:
 >- Rol de servicio: `Crear y utilizar un nuevo rol de servicio`
@@ -540,24 +544,24 @@ Le damos a **Crear Aplicación**.
 >- EC2 perfil de instancia: `epsilon-rearch-beanstalk-role`
 **EL ROL QUE CREAMOS JUSTO EN EL 8.8.1**
 
-SIGUIENTE
+#### PASO 3. Configuración del acceso al servicio.
 
 VPC.
 - VPC: `la default`
 - Public IP address (**ACTIVATED**)
 - Elegimos todas las subredes de instancia.
 - Pero no marcamos ninguna en: "Elegir subredes de base de datos"
-- añadimos etiqueta, `Project` `Epsilon`
+- Añadimos etiqueta, `Project` `Epsilon`
 
-SIGUIENTE.
+#### PASO 4. Configuración del escalado y del tráfico de instancias - opcional
 
-Configuración del escalado y del tráfico de instancias - opcional
 en este apartado solo vamos a tocar:
 Grupo de escalado automático
 - Tipo de entorno: `Equilibrio de carga.`
 - Instancias: `2Mín.` `4Máx.`
 - Tipo de instancia: `t2.micro`
 
+#### PASO 5. 
 ![image](https://github.com/user-attachments/assets/b4326a12-b3cb-47be-93f3-8c5b732862a5)
 
 ![image](https://github.com/user-attachments/assets/0a789eed-b5a3-4c7c-b758-cce200d3a290)
