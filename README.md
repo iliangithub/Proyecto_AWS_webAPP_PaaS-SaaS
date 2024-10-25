@@ -1,4 +1,4 @@
-# 0.0 Proyecto AWS webAPP2 PaaS & SaaS
+# 0.0 Proyecto AWS webAPP2 PaaS & SaaS ("epsilon").
 
 En realidad, ya hemos terminado el proyecto "delta".
 
