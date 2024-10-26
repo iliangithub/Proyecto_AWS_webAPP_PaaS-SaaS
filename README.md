@@ -561,7 +561,7 @@ Grupo de escalado automático
 - Instancias: `2Mín.` `4Máx.`
 - Tipo de instancia: `t2.micro`
 
-#### PASO 5. 
+#### PASO 5. Configuración de actualizaciones, monitoreo y registros.
 ![image](https://github.com/user-attachments/assets/b4326a12-b3cb-47be-93f3-8c5b732862a5)
 
 ![image](https://github.com/user-attachments/assets/0a789eed-b5a3-4c7c-b758-cce200d3a290)
@@ -581,4 +581,4 @@ y ya en teoría está todo, creamos el beanstalk y si vemos el enlace:
 >![image](https://github.com/user-attachments/assets/43bdf66b-e7fd-48cc-967f-fe7d19d6e10a)
 >
 
-
+## Hacer Update al grupo de Seguridad y ELB.
