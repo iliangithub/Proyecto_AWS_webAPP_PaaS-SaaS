@@ -580,5 +580,10 @@ y ya en teoría está todo, creamos el beanstalk y si vemos el enlace:
 >Ahora, estoy viendo este error:
 >![image](https://github.com/user-attachments/assets/43bdf66b-e7fd-48cc-967f-fe7d19d6e10a)
 >
+>El profesor, ha dicho que puede ser este:
+>
+>![image](https://github.com/user-attachments/assets/bb49a054-658c-48dd-9e15-7feec89be353)
+>
+
 
 ## Hacer Update al grupo de Seguridad y ELB.
