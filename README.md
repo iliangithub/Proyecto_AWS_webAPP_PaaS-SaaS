@@ -537,7 +537,6 @@ Le damos a **Crear Aplicación**.
 
 #### PASO 2. Configuración del acceso al servicio.
 
-> 
 >
 >Acceso al Servicio:
 >- Rol de servicio: `Crear y utilizar un nuevo rol de servicio`
@@ -548,20 +547,20 @@ Le damos a **Crear Aplicación**.
 
 #### PASO 3. Configuración del acceso al servicio.
 
-VPC.
-- VPC: `la default`
-- Public IP address (**ACTIVATED**)
-- Elegimos todas las subredes de instancia.
-- Pero no marcamos ninguna en: "Elegir subredes de base de datos"
-- Añadimos etiqueta, `Project` `Epsilon`
+>VPC.
+>- VPC: `la default`
+>- Public IP address (**ACTIVATED**)
+>- Elegimos todas las subredes de instancia.
+>- Pero no marcamos ninguna en: "Elegir subredes de base de datos"
+>- Añadimos etiqueta, `Project` `Epsilon`
 
 #### PASO 4. Configuración del escalado y del tráfico de instancias - opcional
 
-en este apartado solo vamos a tocar:
-Grupo de escalado automático
-- Tipo de entorno: `Equilibrio de carga.`
-- Instancias: `2Mín.` `4Máx.`
-- Tipo de instancia: `t2.micro`
+>en este apartado solo vamos a tocar:
+>Grupo de escalado automático
+>- Tipo de entorno: `Equilibrio de carga.`
+>- Instancias: `2Mín.` `4Máx.`
+>- Tipo de instancia: `t2.micro`
 
 #### PASO 5. Configuración de actualizaciones, monitoreo y registros.
 ![image](https://github.com/user-attachments/assets/b4326a12-b3cb-47be-93f3-8c5b732862a5)
