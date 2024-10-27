@@ -322,33 +322,35 @@ Ahora, nos volvemos al Dashboard y "create cache", create memcached cache.
 
 ![image](https://github.com/user-attachments/assets/543038cc-34e1-4160-8bc9-1c71c42f9d6a)
 
-- Design your own cache
-- Standard create
+> #### PASO 1. Configuración del clúster.
+>- Design your own cache
+>- Standard create
+>
+>Ubicación
+>- AWS cloud.
+>
+>Información del clúster:
+>- Name: `epsilon-rearch-cache`
+>- Description: `epsilon-rearch-cache`.
+>
+>Cluster settings 
+> - Engine version: `1.6.22`
+> - port: `11211`
+> - parameter group: `epsilon-reach-cache-paragrp`
+> - node type: `cache.t2.micro`
+> - number of nodes: 1
+>
+>Subnet group settings, (elija un grupo de subredes existente).
+> - subnet groups: `epsilon-rearch-cache-subgrp`
+>
+>Ubicación de zonas de disponibilidad:
+> - availability zone: "None preference".
 
-Ubicación
-- AWS cloud.
-
-Información del clúster:
-- Name: `epsilon-rearch-cache`
-- Description: `epsilon-rearch-cache`.
-
-Cluster settings 
-- Engine version: `1.6.22`
-- port: `11211`
-- parameter group: `epsilon-reach-cache-paragrp`
-- node type: `cache.t2.micro`
-- number of nodes: 1
-
-Subnet group settings, (elija un grupo de subredes existente).
-- subnet groups: `epsilon-rearch-cache-subgrp`
-
-Ubicación de zonas de disponibilidad:
-- availability zone: "None preference".
-
-Le damos a siguiente y llegamos a Advanced Settings:
-Segurity, (LE DAMOS A MANAGE/ADMINISTRAR):
-- Security Group: `epsilon-rearch-backend-sg`
-- Maintenance: No preference.
+> #### PASO 2. Configuración avanzada.
+> Le damos a siguiente y llegamos a Advanced Settings:
+> Segurity, (LE DAMOS A MANAGE/ADMINISTRAR):
+> - Security Group: `epsilon-rearch-backend-sg`
+> - Maintenance: `No preference.`
 
 Y lo creamos.
 
