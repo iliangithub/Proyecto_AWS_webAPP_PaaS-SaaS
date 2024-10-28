@@ -574,7 +574,11 @@ Le damos a **Crear Aplicación**.
 >**Instancias**
 > - Tipo de volumen raíz: `(Valor predeterminado del contenedor)` voy a probar también el `Uso general 3 (SSD)`.
 > - Tamaño, IOPS, Rendimiento, es algo que no puedo modificar, si selecciono el predeterminado, pero si uso el general 3, si puedo, pero de todas formas, TAMPOCO voy a modificar nada.
->
+
+>[!WARNING]
+> **28 de octubre de 2024**
+>Efectivamente, hay que usar el "Uso general 3 (SSD), para que funcione.
+
 > **Monitoreo de Amazon CloudWatch**
 > - 5 minutos.
 >
