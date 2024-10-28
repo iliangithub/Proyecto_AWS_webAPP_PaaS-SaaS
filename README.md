@@ -657,5 +657,20 @@ Le damos a **Crear Aplicación**.
 Starting on October 1, 2024, Amazon EC2 Auto Scaling will no longer support the creation of launch configurations for new accounts. Existing environments will not be impacted. For more information about other situations that are impacted, including temporary option settings required for new accounts, refer to Launch templates  in the Elastic Beanstalk Developer Guide.
 >
 > https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-autoscaling-launch-templates.html
-> 
-## Hacer Update al grupo de Seguridad y ELB.
+>
+
+### 8.8.3 Beanstalk. Resultado final del Beanstalk:
+
+El estado **TIENE QUE SER "OK", no Unknown u otra cosa**.
+
+![image](https://github.com/user-attachments/assets/e6ec8281-d96b-45b1-8d90-9b9aaa0ee1d1)
+
+Y además, los eventos tiene que estar todos bien, nada en rojo:
+
+![image](https://github.com/user-attachments/assets/e0d94756-2e4b-403d-9653-865c16a8ae12)
+
+Si vuelvo a acceder desde el enlace:
+
+![image](https://github.com/user-attachments/assets/337e1686-37a7-4fdc-8806-64bb08f129dc)
+
+## 8.9 Hacer Update al grupo de Seguridad y ELB.
