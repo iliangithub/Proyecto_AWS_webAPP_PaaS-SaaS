@@ -533,7 +533,7 @@ Le damos a **Crear Aplicación**.
 >  ```
 >  (tiene que ser único)
 >
-Plataforma
+> Plataforma
 >- Tipo de plataforma: `Plataforma administrada.`
 >- Plataforma: `TomCat`
 >- Ramificación de la plataforma: `Tomcat 10 with Correto 21 running...`
