@@ -516,17 +516,28 @@ Le damos a **Crear Aplicación**.
 > - Nivel de entorno: `Entorno de servidor web`
 >
 > Información de la aplicación:
-> - Nombre: `epsilon-rearch-beanapp`
+> - Nombre:
+>   ```
+>   epsilon-rearch-beanapp
+>   ```
 >
 >Información del entorno:
->- Nombre del entorno: `Epsilon-rearch-beanapp-prod`
->- Dominio: `epsilonrearch` (tiene que ser único)
+>- Nombre del entorno:
+>  ```
+>  Epsilon-rearch-beanapp-prod
+>  ```
+>  
+>- Dominio:
+>  ```
+>  epsilonrearch
+>  ```
+>  (tiene que ser único)
 >
->Tipo de plataforma
->- Plataforma administrada
+Plataforma
+>- Yipo de plataforma: `Plataforma administrada.`
 >- Plataforma: `TomCat`
->- Ramificación de la plataforma: Tomcat 10 with Correto 21 running...
->- Versión: 5.3.3
+>- Ramificación de la plataforma: `Tomcat 10 with Correto 21 running...`
+>- Versión: `5.3.3`
 >
 >Código de aplicación
 >- Aplicación de ejemplo
