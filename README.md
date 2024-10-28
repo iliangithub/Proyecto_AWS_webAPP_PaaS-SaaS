@@ -524,7 +524,7 @@ Le damos a **Crear Aplicación**.
 >Información del entorno:
 > - Nombre del entorno:
 >  ```
->  Epsilon-rearch-beanapp-prod
+>   Epsilon-rearch-beanapp-prod
 >  ```
 >  
 >- Dominio:
@@ -539,8 +539,8 @@ Le damos a **Crear Aplicación**.
 >- Ramificación de la plataforma: `Tomcat 10 with Correto 21 running...`
 >- Versión: `5.3.3`
 >
->Código de aplicación
->- Aplicación de ejemplo
+>Código de aplicación. (luego vamos a importar la página que tenemos)
+>- Aplicación de ejemplo.
 >
 >Valores preestablecidos
 >- Configuración personalizada
