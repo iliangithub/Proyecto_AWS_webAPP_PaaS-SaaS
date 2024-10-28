@@ -556,6 +556,10 @@ Plataforma
 >- EC2 perfil de instancia: `epsilon-rearch-beanstalk-role`
 **EL ROL QUE CREAMOS JUSTO EN EL 8.8.1**
 
+> [!WARNING]
+> Primero que nada, abre una ventana nueva con el AWS, vete a IAM > Roles, busca si NO ESTÁ CREADO DE ANTES EL ROL: `aws-elasticbeanstalk-service-role` si está creado de antes, bórralo, y continúa.
+> 
+
 #### PASO 3. Configuración del acceso al servicio.
 
 >VPC.
