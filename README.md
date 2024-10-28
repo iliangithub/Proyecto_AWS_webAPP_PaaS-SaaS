@@ -577,6 +577,7 @@ Le damos a **Crear Aplicación**.
 
 >[!WARNING]
 > **28 de octubre de 2024**
+>
 >Efectivamente, hay que usar el "Uso general 3 (SSD), para que funcione.
 
 > **Monitoreo de Amazon CloudWatch**
