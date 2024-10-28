@@ -522,7 +522,7 @@ Le damos a **Crear Aplicación**.
 >   ```
 >
 >Información del entorno:
->- Nombre del entorno:
+> - Nombre del entorno:
 >  ```
 >  Epsilon-rearch-beanapp-prod
 >  ```
@@ -534,7 +534,7 @@ Le damos a **Crear Aplicación**.
 >  (tiene que ser único)
 >
 Plataforma
->- Yipo de plataforma: `Plataforma administrada.`
+>- Tipo de plataforma: `Plataforma administrada.`
 >- Plataforma: `TomCat`
 >- Ramificación de la plataforma: `Tomcat 10 with Correto 21 running...`
 >- Versión: `5.3.3`
