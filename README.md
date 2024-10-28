@@ -571,13 +571,47 @@ Le damos a **Crear Aplicación**.
 
 #### PASO 4. Configuración del escalado y del tráfico de instancias - opcional
 
->en este apartado solo vamos a tocar:
+>**Instancias**
+> - Tipo de volumen raíz: `(Valor predeterminado del contenedor)` voy a probar también el `Uso general 3 (SSD)`.
+> - Tamaño, IOPS, Rendimiento, es algo que no puedo modificar, si selecciono el predeterminado, pero si uso el general 3, si puedo, pero de todas formas, TAMPOCO voy a modificar nada.
+>
+> **Monitoreo de Amazon CloudWatch**
+> - 5 minutos.
+>
+> **Servicio de metadatos de insancia (IMDS).**
+> - Desactivada (ACTIVADO, CHECKED)
+>
+> **Grupos de seguridad de EC2.**
+> - No añadimos ni tocamos nada.
+>   
+> **Capacidad.**
 >Grupo de escalado automático
 >- Tipo de entorno: `Equilibrio de carga.`
 >- Instancias: `2Mín.` `4Máx.`
+>- Composición de la flota: `Instancias bajo demanda`
+>  
+>- Arquitectura: x86_64
+>  
 >- Tipo de instancia: `t2.micro`
 >
+>**Desencadenadores de escalado.**
+>- Métrica: `NetworkOut`
 > **NO VAMOS A PONER AHÍ EL GRUPO DE SEGURIDAD DE EC2**
+>
+> **Configuración de red del equilibrador de carga.**
+> - Visibilidad: `Público.`
+>
+> **Subredes del equilibrador de carga**
+> (Seleccionamos todos)
+>
+>**Tipo de equilibrador de carga**
+>- Equilibrador de carga de aplicación
+>- Dedicated
+>
+>**Agentes de escucha**
+>Los dejamos por defecto.
+>
+>**Procesos**
 
 #### PASO 5. Configuración de actualizaciones, monitoreo y registros.
 ![image](https://github.com/user-attachments/assets/b4326a12-b3cb-47be-93f3-8c5b732862a5)
