@@ -612,13 +612,15 @@ Le damos a **Crear Aplicación**.
 >Los dejamos por defecto.
 >
 >**Procesos**
-
-#### PASO 5. Configuración de actualizaciones, monitoreo y registros.
-![image](https://github.com/user-attachments/assets/b4326a12-b3cb-47be-93f3-8c5b732862a5)
-
-![image](https://github.com/user-attachments/assets/0a789eed-b5a3-4c7c-b758-cce200d3a290)
-
+> Añadimos un proceso:
+>![image](https://github.com/user-attachments/assets/b4326a12-b3cb-47be-93f3-8c5b732862a5)
+>
+>![image](https://github.com/user-attachments/assets/0a789eed-b5a3-4c7c-b758-cce200d3a290)
+>
 ![image](https://github.com/user-attachments/assets/d68a10f8-4214-4d93-b5fe-113d388e0652)
+>
+#### PASO 5. Configuración de actualizaciones, monitoreo y registros.
+
 
 y ya en teoría está todo, creamos el beanstalk y si vemos el enlace:
 
