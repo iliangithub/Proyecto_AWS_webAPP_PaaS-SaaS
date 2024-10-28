@@ -674,3 +674,35 @@ Si vuelvo a acceder desde el enlace:
 ![image](https://github.com/user-attachments/assets/337e1686-37a7-4fdc-8806-64bb08f129dc)
 
 ## 8.9 Hacer Update al grupo de Seguridad y ELB.
+
+Ahora, necesitamos que el grupo de seguridad del Backend (ElastiCache, Amazon MQ y Amazon RDS) permita conexión desde el grupo de seguridad de BeanStalk.
+
+Nos vamos al EC2 y tiene que haber creado 1 o varias instancias (dependiendo de las que le hemos puesto) para el Balanceador de Carga.
+
+![image](https://github.com/user-attachments/assets/440d7c25-400e-431e-84bb-eb47a4b7a2ae)
+
+![image](https://github.com/user-attachments/assets/bd9972e1-5560-45e2-bfbf-ed41c09f4996)
+
+Y voy a copiar el ID:
+```
+sg-05115073f7b066783
+```
+
+Ahora vamos a Grupos de Seguridad, y voy a editar el `epsilon-rearch-backend-sg`.
+
+![image](https://github.com/user-attachments/assets/a0282cd1-2cb3-42e7-81ec-3168596504f7)
+
+## 8.10 Construir y desplegar el artefacto.
+
+Como tal podríamos subirlo directamente al enviroment, es decir, nos vamos a Elastic Beanstalk, Enviroments:
+
+![image](https://github.com/user-attachments/assets/4c12b4f2-e223-4b22-a481-9af43894cff4)
+
+![image](https://github.com/user-attachments/assets/f1fab957-c795-4e70-b585-03d7c620533f)
+
+Primero tengo que construir mi artefacto. Y necesitamos asegurarnos que nuestro código contiene la información de los servicios de Backend.
+
+Primero necesito el EndPoint del RDS (Punto de enlace):
+```
+- epsilon-rds-rearch.crmqiuq428z2.us-east-1.rds.amazonaws.com
+```
