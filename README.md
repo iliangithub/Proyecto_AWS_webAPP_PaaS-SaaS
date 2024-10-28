@@ -620,10 +620,17 @@ Le damos a **Crear Aplicación**.
 >
 >![image](https://github.com/user-attachments/assets/d68a10f8-4214-4d93-b5fe-113d388e0652)
 >
+> **Reglas** y **Acceso a los archivos de registro** `lo dejamos por defecto`
+>
 #### PASO 5. Configuración de actualizaciones, monitoreo y registros.
 
-
-y ya en teoría está todo, creamos el beanstalk y si vemos el enlace:
+> **Monitoreo**, **Actualizaciones administradas de la plataforma** y **Notificaciones por correo electrónico** `TODO POR DEFECTO`.
+> 
+> **Actualizaciones e implementaciones continuas**
+> - Política de implementación: `Continuo/Roling.`
+> - Tipo de tamaño de lote: `Porcentaje.`
+>
+>y ya en teoría está todo, creamos el beanstalk y si vemos el enlace:
 
 ![image](https://github.com/user-attachments/assets/5220420e-47fe-40a1-b599-b2382b69c40a)
 
