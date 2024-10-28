@@ -576,6 +576,8 @@ Le damos a **Crear Aplicación**.
 >- Tipo de entorno: `Equilibrio de carga.`
 >- Instancias: `2Mín.` `4Máx.`
 >- Tipo de instancia: `t2.micro`
+>
+> **NO VAMOS A PONER AHÍ EL GRUPO DE SEGURIDAD DE EC2**
 
 #### PASO 5. Configuración de actualizaciones, monitoreo y registros.
 ![image](https://github.com/user-attachments/assets/b4326a12-b3cb-47be-93f3-8c5b732862a5)
