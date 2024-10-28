@@ -704,5 +704,20 @@ Primero tengo que construir mi artefacto. Y necesitamos asegurarnos que nuestro 
 
 Primero necesito el EndPoint del RDS (Punto de enlace):
 ```
-- epsilon-rds-rearch.crmqiuq428z2.us-east-1.rds.amazonaws.com
+epsilon-rds-rearch.crmqiuq428z2.us-east-1.rds.amazonaws.com
+```
+Ahora el del Amazon MQ:
+AMQP:
+```
+amqps://b-4220e03a-379a-4552-9c14-b8cd4ecb584b.mq.us-east-1.amazonaws.com:5671
+```
+Amazon ElastiCache:
+Punto de enlace de configuración:
+```
+epsilon-rearch-cache.xvc3zj.cfg.use1.cache.amazonaws.com:11211
+```
+
+Y ahora también el enlace al proyecto.
+```
+https://github.com/hkhcoder/vprofile-project.git
 ```
