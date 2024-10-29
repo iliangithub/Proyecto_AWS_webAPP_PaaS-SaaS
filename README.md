@@ -730,8 +730,16 @@ Voy a abrir el VSCode.
 
 ![image](https://github.com/user-attachments/assets/2bdaa7d9-f620-46db-8c33-81758eb76a7c)
 
-y me pedirá escoger una carpeta en donde voy a colnar el repositorio:
+y me pedirá escoger una carpeta en donde voy a clonar el repositorio:
 
 ![image](https://github.com/user-attachments/assets/3cf047a3-93d4-48f1-92b2-6f7d7ead2508)
 
-![image](https://github.com/user-attachments/assets/2496d641-2a47-4dee-8340-4d58630404b4)
+Ahora voy a escoger la rama:
+
+![image](https://github.com/user-attachments/assets/88b309aa-f185-4aaf-a97c-c0f166240db5)
+
+![image](https://github.com/user-attachments/assets/446de253-2392-4f97-82b8-0bd3bef7bd3c)
+
+Vamos a modificar estas cosas por, (teniendo en cuenta de que estamos en la Rama: "awsrefactor").
+
+![image](https://github.com/user-attachments/assets/7b396d0a-a578-46ca-bd4b-db1e2bae459a)
