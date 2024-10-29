@@ -785,4 +785,6 @@ Tenemos que usar:
 
 Para ello:
 
--```choco install corretto17jdk -y```
+- ```
+  choco install corretto17jdk -y
+  ```
