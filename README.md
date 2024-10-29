@@ -741,5 +741,3 @@ Ahora voy a escoger la rama:
 ![image](https://github.com/user-attachments/assets/446de253-2392-4f97-82b8-0bd3bef7bd3c)
 
 Vamos a modificar estas cosas por, (teniendo en cuenta de que estamos en la Rama: "awsrefactor").
-
-![image](https://github.com/user-attachments/assets/7b396d0a-a578-46ca-bd4b-db1e2bae459a)
