@@ -721,3 +721,17 @@ Y ahora también el enlace al proyecto.
 ```
 https://github.com/hkhcoder/vprofile-project.git
 ```
+
+
+![image](https://github.com/user-attachments/assets/927e3835-689c-4d31-900d-c7aad7c2d2c2)
+
+
+Voy a abrir el VSCode.
+
+![image](https://github.com/user-attachments/assets/2bdaa7d9-f620-46db-8c33-81758eb76a7c)
+
+y me pedirá escoger una carpeta en donde voy a colnar el repositorio:
+
+![image](https://github.com/user-attachments/assets/3cf047a3-93d4-48f1-92b2-6f7d7ead2508)
+
+![image](https://github.com/user-attachments/assets/2496d641-2a47-4dee-8340-4d58630404b4)
