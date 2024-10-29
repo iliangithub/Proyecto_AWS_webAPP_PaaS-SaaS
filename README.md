@@ -279,9 +279,9 @@ Protección contra eliminación
 Y lo creamos.
 
 >[!IMPORTANT]
->Nos aparecerá un PopUp, diciendo de crear un ElastiCache CLuster o un RDS Proxy, vamos a cerrarlo.
+>Nos aparecerá un PopUp, diciendo de crear un ElastiCache Cluster o un RDS Proxy, vamos a cerrarlo.
 >
->Arriba del todo nos aparecerá "VIEW CREDENTIALS DETAILS", pue shemos generado una contraseña del usuario de la Base de Datos, la necesitamos pues guardar/copiar.
+>Arriba del todo nos aparecerá "VIEW CREDENTIALS DETAILS", pues hemos generado una contraseña del usuario de la Base de Datos, la necesitamos pues guardar/copiar.
 >```
 >eJmCwVwQjYRY22wRtftv
 >```
