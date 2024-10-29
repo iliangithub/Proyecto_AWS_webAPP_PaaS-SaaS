@@ -781,4 +781,4 @@ Y buscamos `select default terminal` y seleccionamos GitBash, abrimos la termina
 
 Tenemos que usar:
 - La versión de Maven `3.9.9`
-- La Java `17.0.12`
+- La Java `17.0.12` o superior.
