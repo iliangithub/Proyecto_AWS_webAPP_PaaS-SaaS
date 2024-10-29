@@ -796,3 +796,35 @@ Ahora simplemente hacemos un:
 - ```
   mvn install
   ```
+Y aquí tienemos ya el artefacto:
+
+![image](https://github.com/user-attachments/assets/ff9661b4-0af5-4da1-ae5f-7b3842ce1803)
+
+Me voy a Beanstalk y lo subo:
+
+![image](https://github.com/user-attachments/assets/194ee6ab-0c7c-46ac-837a-307e11839067)
+
+![image](https://github.com/user-attachments/assets/5afd0b69-64a0-465a-8064-63ac97ce8781)
+
+Seleccionamos el .war y la versión será:
+
+![image](https://github.com/user-attachments/assets/d8681254-1510-4ff7-bedd-51acba8864c5)
+
+Como podemos comprobar, luego tras esperar un rato de que se haya actualizado/desplegado, podemos acceder vía Web:
+
+![image](https://github.com/user-attachments/assets/ae8c0ac1-4e9d-4119-8dde-b1f957ee8cbe)
+
+>[!IMPORTANT]
+> Para iniciar sesión:
+>
+> - user:`admin_vp`
+> - password:`admin_vp`
+>
+>Si me da este error, es porque la BD no tiene los datos:
+>![image](https://github.com/user-attachments/assets/2442226d-a6c2-45c6-8346-9a255a044b30)
+>
+> Y tengo que volver a hacer lo de la instancia MySQL para meter los datos.
+>
+
+Y este es el resultado de lo demás:
+
