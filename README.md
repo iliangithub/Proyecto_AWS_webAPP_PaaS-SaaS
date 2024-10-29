@@ -788,3 +788,11 @@ Para ello:
 - ```
   choco install corretto17jdk -y
   ```
+Si hago un `mvn -version`.
+
+![image](https://github.com/user-attachments/assets/4637340f-bafb-429f-96d0-93c8d35b8f4a)
+
+Ahora simplemente hacemos un:
+-```
+ mvn install
+ ```
