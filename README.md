@@ -771,3 +771,14 @@ elasticsearch.port=9300
 elasticsearch.cluster=rabbit
 elasticsearch.node=BlueBunny983
 ```
+
+Guardamos el archivo y pulsamos CTRL + SHIFT + P.
+Y buscamos `select default terminal` y seleccionamos GitBash, abrimos la terminal.
+
+`mvn -version`
+
+![image](https://github.com/user-attachments/assets/4e3f527e-332d-4a7f-b684-a7286d9f30ac)
+
+Tenemos que usar:
+- La versión de Maven `3.9.9`
+- La Java `17.0.12`
