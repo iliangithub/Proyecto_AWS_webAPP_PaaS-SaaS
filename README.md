@@ -500,7 +500,7 @@ Agregar permisos:
 - AWSElasticBeanstalkRoleSNS
 - AWSElasticBeanstalkWebTier
 
-
+Detalles del rol:
 - Name: `epsilon-rearch-beanstalk-role`
 - Description: `epsilon-rearch-beanstalk-role`
 
