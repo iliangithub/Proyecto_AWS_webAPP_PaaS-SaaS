@@ -44,7 +44,7 @@ En cuanto al Backend, para las base de datos, utilizaremos instancias RDS, vamos
 - PaaS
 - SaaS
 
-![image](https://github.com/user-attachments/assets/f450d367-0856-4c85-8753-a3f931c86a7b)
+![Proyecto “epsilon”](https://github.com/user-attachments/assets/8f459e02-a4a4-4275-a266-d982488d8d12)
 
 Entonces, el usuario accederá a nuestra URL, que será resuelta a un punto final desde Amazon Route 53.
 
