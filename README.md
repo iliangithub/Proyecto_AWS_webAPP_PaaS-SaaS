@@ -1,2 +1,839 @@
-# Proyecto_AWS_webAPP_PaaS-SaaS
-This GitHub project is part of the 'DevOps Beginners to Advanced' course on Udemy. Our previous AWS project, was about deploying a multitier webapp using: Memcached, MySQL, TomCat, Rabbit MQ, and a load balancer. Now we are rebuilding all this, with the purpose of using the AWS Services and Apps, like ElastiCache, Amazon MQ, RDS, Beanstalk
+> [!NOTE]
+> Este repositorio fue creado por primera vez el 25 de octubre de 2024.
+>
+> ![Captura de la ultima modificacion del repositorio](IMG/Captura%20de%20pantalla%202026-10-04%20235206.png)
+>
+> Se decidió borrar el anterior repositorio y subirlo en este para censurar datos, IDs, además de que aparecían en el historial de commits.
+> 
+
+# 0.0 Proyecto AWS webAPP2 PaaS & SaaS ("epsilon").
+
+>[!IMPORTANT]
+>Venimos de aquí:
+>
+><URL_DEL_PROYECTO_ANTERIOR>
+>
+
+En realidad, ya hemos terminado el proyecto "delta".
+
+Este proyecto, va a pasar de ser "delta" a ser **"epsilon"**.
+
+Ahora, vamos a volver a hacerlo pero modificando ciertas cosas. Vamos a cambiar la arquitectura de los servicios para AWS Cloud. Con la idea de mejorar la agilidad.
+
+## 8.1 Escenario, nuevo proyecto "epsilon":
+
+Digamos que estamos trabajando en un proyecto, en donde los servicios corren en máquinas físicas/virtuales o incluso pues en la nube, como las instancias EC2, y tenemos varios servicios, como aplicaciones web, de red, DNS, DHCP, bases de datos.
+
+Necesitaríamos pues varios equipos distintos, uno para la parte de Cloud, un equipo de virtualización, uno de monitorización, administradores de sistemas, etc.
+
+Entonces, hay muchas operaciones, y es complicado manejar, consume mucho tiempo y dinero.
+
+Para ello, podemos utilizar la plataforma Cloud, pero en vez de IaaS, usaremos PaaS y SaaS. (Platform as a Service) y (Service as a Service).
+
+Entonces, en caso de AWS, no vamos a ir con instancias corrientes, usaremos, algunos servicios de AWS y podríamos escribir como codigo nuestra infraestructura IaaC.
+
+PaaS y SaaS son felxibles y fáciles de escalar.
+
+Entonces, en vez de utilizar instancias EC2 normales para instalar nuestros servicios, utilizaremos Beanstalk.
+
+> [!TIP]
+> Elastic Beanstalk, un servicio de administración de aplicaciones en la nube que facilita el despliegue y gestión de aplicaciones web sin tener que preocuparse por la infraestructura subyacente. 
+>
+
+Beanstalk tendrá un balanceador de carga y autoescalado, almacenamiento S3 para almacenar los artefactos, además del servidor APP.
+
+En cuanto al Backend, para las base de datos, utilizaremos instancias RDS, vamos a utilizar Elastic Cache en vez de MemCached y Active MQ, en vez de RabbitMQ, el Route 53 como DNS y Cloud Front para "content delivery network".
+
+## 8.2 Objetivo:
+
+- Necesitamos una infraestructura flexible.
+- "no upfront cost", es decir, pagar por lo que usas, mientas lo usas.
+- IaaC
+- PaaS
+- SaaS
+
+![Proyecto “epsilon”](IMG/01.png)
+
+Entonces, el usuario accederá a nuestra URL, que será resuelta a un punto final desde Amazon Route 53.
+
+El punto final será parte de Amazon CloudFront, una red de entrega de contenido, que almacenará en caché muchas cosas para servir a la audiencia global.
+
+Desde allí, la solicitud será redirigida al balanceador de carga de aplicaciones, que es parte de tu Elastic Beanstalk. El balanceador de carga de aplicaciones enviará la solicitud a la instancia de EC2, que está en un grupo de escalado automático. Aquí es donde estará ejecutándose nuestro servicio de aplicación Tomcat, y todo esto será parte de Elastic Beanstalk.
+
+También habrá alarmas de Amazon CloudWatch que monitorearán el grupo de escalado automático y escalarán hacia arriba o hacia abajo según sea necesario.
+
+Habrá un bucket donde se almacenarán los artefactos, y podremos desplegar nuestro artefacto más reciente simplemente haciendo clic en un botón.
+
+Por lo tanto, todo nuestro frontend será gestionado por Beanstalk. Para el backend, en lugar de RabbitMQ, estamos utilizando Amazon MQ.
+
+En lugar de usar Memcached en la instancia de EC2, estamos usando ElastiCache.
+
+Y en lugar de usar una base de datos que se ejecute en una instancia de EC2, vamos a utilizar Amazon RDS.
+
+Así que el usuario accederá a un punto final.
+
+Ese punto final será parte de Amazon CloudFront, que enviará la solicitud al balanceador de carga de aplicaciones en Beanstalk, el cual reenviará la solicitud a las instancias en el grupo de escalado automático.
+
+Todo esto será monitoreado por Amazon CloudWatch, que tendrá alarmas. Los artefactos se almacenarán en el bucket de S3.
+
+Para el backend,
+
+Accederá a Amazon MQ, ElastiCache y Amazon RDS Service.
+
+Nuevamente, te recomiendo pausar el video y observar este diseño una vez más.
+
+Veamos ahora el flujo de ejecución.
+
+Primero, obviamente iniciaremos sesión en nuestra cuenta de AWS. Crearemos un par de claves para nuestra instancia de Beanstalk, o Beanstalk lanzará una instancia de EC2, así que crearemos un par de claves, de modo que, en caso de que necesites iniciar sesión, puedas usar ese par de claves.
+
+Crearemos un grupo de seguridad para los servicios de backend: ElastiCache, RDS y ActiveMQ.
+
+Luego, crearemos RDS,
+
+ElastiCache y Amazon ActiveMQ.
+
+Después, crearemos el entorno de Elastic Beanstalk.
+
+Luego, actualizaremos nuestro grupo de seguridad del backend para permitir tráfico desde el grupo de seguridad de Beanstalk, de modo que cuando Beanstalk sea creado, también creará un grupo de seguridad para su instancia de EC2 y también para el balanceador de carga.
+
+Permitiremos tráfico desde el grupo de seguridad de la instancia de Beanstalk para acceder a nuestros servicios de backend, que están en el grupo de seguridad del backend.
+
+Estamos colocando todos nuestros servicios de backend en un grupo de seguridad, y necesitarán interactuar entre sí, por lo que también actualizaremos el grupo de seguridad del backend para permitir el tráfico interno.
+
+Para este momento, nuestros servicios de backend también estarán funcionando. RDS estará funcionando, y necesitaremos inicializar nuestra base de datos de RDS.
+
+Así que lanzaremos una instancia de EC2.
+
+Y desde allí haremos un inicio de sesión de MySQL en nuestro RDS y inicializaremos nuestra base de datos.
+
+Si seguiste nuestro proyecto anterior, sabrás que nuestra aplicación de perfil devuelve una página en /login, por lo que necesitamos cambiar la verificación de estado en Beanstalk.
+
+De modo que cuando despleguemos nuestro artefacto, debería hacer una verificación de estado en /login.
+
+Y también agregaremos un listener HTTPS en el puerto 443 a nuestro balanceador de carga elástico (ELB), que también será creado automáticamente por Beanstalk y será parte de tu entorno de Beanstalk.
+
+Después, construiremos los artefactos a partir de nuestro código fuente con la información del backend.
+
+Para este momento, deberíamos tener el punto final de RDS, el punto final de Amazon MQ y el punto final de ElastiCache. Ingresaremos esta información en nuestro archivo de propiedades de la aplicación y construiremos el artefacto.
+
+Luego desplegaremos el artefacto en el entorno de Beanstalk.
+
+Y crearemos una red de entrega de contenido utilizando Amazon CloudFront con un certificado SSL, por supuesto, para una conexión HTTPS.
+
+Una vez que tengamos esto listo, podemos actualizar nuestro balanceador de carga y el punto final en GoDaddy, o también podemos hacerlo en Amazon Route 53, en zonas DNS públicas.
+
+Una vez que todo esto esté listo, finalmente lo probaremos desde la URL.
+
+OK, ahora hagamos que esto suceda.
+
+Así que si has terminado de ver la introducción, únete a mí en la consola de AWS.
+
+## 8.3 Crear las pares-clave y Grupos de Seguridad.
+
+A partir de ahora, voy a poner a modo de resumen; qué es, y cómo lo hecho, sin tantas capturas.
+
+### 8.3.1  Grupos de Seguridad.
+
+En EC2 también.
+
+> [!IMPORTANT]
+> Si por casualidad, hemos borrado todos los grupos de seguridad, incluso el "default", para crearlo de nuevo, simplemente en acciones le damos a "crear grupo por defecto".
+> 
+
+- Name: `epsilon-rearch-backend-SG`
+- Descripción: `epsilon-rearch-backend-SG`
+- Inbound: NADA
+
+Y LUEGO VAMOS A VOLVER A AÑADIRLE OTRA REGLA, (para permitir al acceso desde Beanstalk EC2 instance )
+
+Inbound Rule.
+- Type: All traffic
+- Source: Custom, `epsilon-rearch-backend-SG`
+- Description: `Allow all traffic internally`
+
+> [!IMPORTANT]
+> Luego, cuando creemos el "Beanstalk" volveremos a editarlo también.
+> Para añadirle otra regla.
+>
+
+### 8.3.2 Crear las pares-clave.
+
+Sería conveniente, crear un par-clave, para nuestra instancia "beanstalk", no es necesario imprescindible, iniciar sesión en la instancia "Beanstalk".
+
+Nos vamos a EC2 y creamos el par de clave:
+
+- Name: `epsilon-bean-key`
+- File Format: .pem
+
+y la creamos. ![image](IMG/02.png)
+
+## 8.4 RDS
+Vamos a la barra de búsqueda y buscamos RDS. Podríamos directante crear nuestra instancia DB, en el apartado del dashboard, "DB instances".
+
+![image](IMG/03.png)
+
+**No lo vamos a hacer. En la realidad, habrá situaciones en las que tenemos que cambiar algún parámetro de nuestra Base de Datos, RDS no te proporciona ningún acceso del estilo SSH, donde entramos y configuramos. Si queremos cambiar los parámetros de nuestra Base de datos, hay un concepto llamado "parameter group" en RDS.**
+
+Entonces, vamos a crear el "parameter group", para así cuando lo seleccionemos, cuando queramos, podamos hacer cambios a la Base de Datos y se verá reflejado pues en la instancia RDS..
+Antes de crear el RDS, vamos a crear el :
+- parameter group.
+- subnet group.
+
+### 8.4.1 Creación Parameter Group.
+
+En el Dashboard, buscamos "Parameter Group" y le damos a "create".
+
+![image](IMG/04.png)
+
+- Parameter Group Name: `epsilon-rds-parametgrp`
+- Description: `epsilon-rds-parametgrp`
+- Engine Type: `MySQL Community.`
+- Parameter Group Family: `MySQL8.0`
+- Type: `DB Parameter Group`
+
+Y lo creamos. Si le damos al parameter group, podemos ver todo lo que podemos modificar.
+
+### 8.4.2 Creación Subnet Group.
+
+Ahora es turno de los "subnet group". Es un grupo de subredes en una VPC (Virtual Private Cloud). Básicamente, es una red que está divida en otras redes más pequeñas llamadas pues subredes.
+
+Cuando lancemos nuestra instancia RDS tenemos que seleccionar el "subnet group".
+
+>[!TIP]
+>Cuando seleccionamos diferentes subredes en casos de producción, necesitamos crear pues nuestra propia, VPC en un "subnetgroup" para el RDS y seleccionamos pues esas subredes a la hora de lanzar la instancia RDS.
+>
+
+Vamos a crear el subnet group.
+Create DB subnet group:
+- Nombre: `epsilon-rds-rearch-subgrp`
+- Descripción: `epsilon-rds-rearch-subgrp`
+- VPC: `aquí pues seleccionamos la VPC que hayamos creado, pero en nuestro caso, la default.`
+
+Add Subnets:
+- Availability Zone: Seleccionamos todas las zonas `us-east1a ; us-east1b ; ... us-east-1f`
+- Subnets, seleccionamos todas las subredes de cada zona `us-east-1a --> subnet-055a1... ; us-east-1f --> subnet-01ed...`
+
+Algunas zonas pueden tener varias "subnets".
+
+>[!TIP]
+>En algunos casos de producción, la gente crea una "subnet" diferente para la Base de datos. Y entonces, puedes seleccionar esas subredes (las de antes), y llamarlo "subnet group". Se hacer por motivos de seguridad y tener más control sobre la Base de datos.
+>
+
+Y creamos. En esta subred, vamos a crear/correr nuestra instancia de Base de Datos.
+
+### 8.4.3 RDS creación de la instancia.
+
+Nos vamos al Dashboard y la creamos.
+
+Crear base de datos.
+
+Elegir un método de creación de base de datos:
+- Seleccionamos `standard create`
+
+Opciones del motor:
+- Tipo de motor: `MySQL`.
+- Edición: Comunidad de MySQL (seleccionado, no puedes cambiarlo)
+- `Mostrar solo versiones compatibles con las escrituras optimizadas de Amazon RDS` y `Mostrar solo las versiones compatibles con el clúster de base de datos multi-AZ` **deshabilitados**.
+- Engine version: `MySQL 8.0.39`.
+- `Enable RDS extended support` **deshabilitado**
+
+Templates:
+- Templates: `Free Tier`.
+
+Nos saltamos "Availability and Durability" y en Settings:
+- DB instance identifier: `epsilon-rds-rearch`
+- username: `admin`
+- Credentials management: `self managed`
+- **Marcamos** auto generate password.
+
+Instance configuration:
+- DB instance class: `Show instance classes that support Amazon RDS Optimized Writes` y `Include previous generation classes`, **deshabilitado**; `db.t4g-micro`
+  
+En storage: 
+- storage type: `general purpose SSD (gp3)` y `20 GB`
+- **DESPLEGAMOS EL:** Escalado automático de almacenamiento **DESMARCAMOS "ENABLE STORAGE AUTOSCALING"**.
+
+En conectivity:
+- No se conecte a un recurso informático EC2.
+- Nube privada virtual (VPC): `La default`.
+- DB subnet group: `epsilon-rds-rearch-subgrp`.
+- public access "No".
+- VPC security Group (firewall): `choose existing`
+- Existing VPC security groups: `epsilon-rearch-backend-sg` **y quitamos la default.**
+- Availability zone `no preference`
+
+El monitoring/supervisión deshabilitado.
+
+Y por último, en "Additional configuration"
+Initial database name: `accounts`.
+DB parameter group: `epsilon-rds-parametgrp`
+
+Copia de seguridad:
+- **Backup deshabilitado**
+- encryption `habilitado`
+
+Mantenimiento:
+
+- Habilitar actualización automática de versiones secundarias (**habilitado**).
+- Periodo de mantenimiento: **Sin preferencia**
+  
+Protección contra eliminación
+- Habilitar la protección contra la eliminación (**DESHABILITADO**)
+
+> [!TIP]
+>(Log exports, debería de estar habilitado, pero como no hemos habilitado el monitoring pues tenemos que dejarlo también deshabilitado, pues no nos sirve, básicamente va a los logs de CloudWatch).
+>
+
+Y lo creamos.
+
+>[!IMPORTANT]
+>Nos aparecerá un PopUp, diciendo de crear un ElastiCache Cluster o un RDS Proxy, vamos a cerrarlo.
+>
+>Arriba del todo nos aparecerá "VIEW CREDENTIALS DETAILS", pues hemos generado una contraseña del usuario de la Base de Datos, la necesitamos pues guardar/copiar.
+>```
+><CONTRASENA_RDS>
+>```
+>luego borraré la cuenta.
+
+>[!IMPORTANT]
+> En caso de haber perdido la contraseña, seleccionamos la BD y le damos a "Modify" y así generamos una nueva, pero claro, no podemos pues recuperar la antigua.
+>
+
+![image](IMG/05.png)
+
+## 8.5 ElastiCache.
+
+Como antes, lo buscamos en la barra de búsqueda.
+
+Y la creación del ElastiCache, es muy similar al RDS. Tenemos que crear:
+- parameter group.
+- subnetgroup.
+
+### 8.5.1 Parameter Group, creación.
+
+- Nombre: `epsilon-rearch-cache-paragrp`
+- Descripción: `epsilon-rearch-cache paragrp`
+- Family: `memcached1.6`
+
+Y lo creamos.
+
+### 8.5.2 Subnet Group, creación.
+
+- Nombre: `epsilon-rearch-cache-subgrp`
+- Descripción: `epsilon-rearch-cache-subgrp`
+- VPC ID: `la por defecto`
+
+Todas las subnets están seleccionadas. Lo creamos.
+
+### 8.5.3 ElastiCache, creación.
+Ahora, nos volvemos al Dashboard y "create cache", create memcached cache.
+
+![image](IMG/06.png)
+
+> #### PASO 1. Configuración del clúster.
+>- Design your own cache
+>- Standard create
+>
+>Ubicación
+>- AWS cloud.
+>
+>Información del clúster:
+>- Name: `epsilon-rearch-cache`
+>- Description: `epsilon-rearch-cache`.
+>
+>Cluster settings 
+> - Engine version: `1.6.22`
+> - port: `11211`
+> - parameter group: `epsilon-reach-cache-paragrp`
+> - node type: `cache.t2.micro`
+> - number of nodes: 1
+>
+>Subnet group settings, (elija un grupo de subredes existente).
+> - subnet groups: `epsilon-rearch-cache-subgrp`
+>
+>Ubicación de zonas de disponibilidad:
+> - availability zone: "None preference".
+
+> #### PASO 2. Configuración avanzada.
+> Le damos a siguiente y llegamos a Advanced Settings:
+> Segurity, (LE DAMOS A MANAGE/ADMINISTRAR):
+> - Security Group: `epsilon-rearch-backend-sg`
+> - Maintenance: `No preference.`
+
+Y lo creamos.
+
+## 8.6 Amazon MQ.
+Lo mismo, buscamos en la barra de navegación "Amazon MQ", le damos a "Get Started".
+- Broker engine: Rabbit MQ
+- Deployment Mode: Simple-instance broker
+
+Detalles:
+- Broker Name: `epsilon-rearch-rabbitmq`
+- Broker instance type: `mq.t3.micro`
+
+Acceso a RabbitMQ:
+- Username: `rabbit`
+- Password: `<CONTRASENA_RABBITMQ>`
+
+DESPLEGAMOS Additional Settings. 
+- Broker engine version: 3.13
+
+Configuración de agentes
+- Crear una configuración nueva con los valores predeterminados
+
+Monitoreo.
+- CloudWatch **deshabilitado** (recordemos que esto en la vida real pues debería de ser así).
+
+Redes y seguridad.
+- Access type: private access.
+
+Grupos de seguridad:
+- Seleccionar grupos de seguridad existentes: `epsilon-rearch-backend-sg`
+
+Lo creamos.
+
+![image](IMG/07.png)
+
+## 8.7 Inicializar la BD.
+### 8.7.1 Crear la instancia.
+Nos falta solamente, como tenemos la BD creada, nos falta coger el esquema de la BD y aplicarlo en nuestra instancia RDS.
+
+Para ello, podemos hacer DOS cosas:
+Hacerlo desde el MySQL Workbench CE:
+
+![image](IMG/08.png)
+
+o también podemos pues crear una instancia EC2, descargar MySQL y utilizarlo para importar la BD.
+Vamos a hacerlo de esa forma.
+
+Voy al buscador de arriba y escribo EC2 y creo una instancia:
+(NO HAY QUE HACER UNA INSTANCIA CURRADA, LA VAMOS A BORRAR, LA CREAMOS SOLO PARA USAR LOS COMANDOS SQL)
+
+Name: `mysqli_cliente`
+AMI: `Ubuntu`
+Key-pair: `el que creamos antes del bean`
+
+![image](IMG/09.png)
+
+![image](IMG/10.png)
+
+la creamos, no tocamos nada más.
+
+### 8.7.2 Modificar el grupo de seguridad.
+
+Ahora, necesitamos dos cosas:
+- Los datos de la Base de datos RDS endpoint, el usuario y contraseña. Entonces, la información del RDS.
+- Permitir que el grupo de seguridad de esta insancia permita, comunicarse con el grupo de seguridad del RDS.
+
+Aunque esté corriendo, vamos a copiar el ID del `mysql-client-sg`:
+
+![image](IMG/11.png)
+
+vamos al backend-sg y creamos una regla de entrada:
+
+MySQL /Aurora ; Custom ; sg-082ba0c0d241bf36b
+
+Habilitado desde el origen pues del cliente MySQL, para eso hemos copiado el ID.
+
+### 8.7.3 YA TENEMOS LOS DATOS RDS, DEL USER Y PASS... Vamos a conectarnos e inicializarla.
+
+Nos conectamos por ssh, IP pública + clave:
+
+```
+ssh -i "epsilon-bean-key.pem" ubuntu@ec2-<IP>.compute-1.amazonaws.com
+```
+
+```
+sudo -i
+```
+
+```
+apt update && apt install mysql-client git -y
+```
+
+```
+git clone https://github.com/hkhcoder/vprofile-project.git
+```
+Y lo tienes descargado en el directorio en el que te encuentres.
+
+Hacemos un cd.
+
+```
+cd vprofile-project/
+```
+
+```
+git checkout awsrefactor
+```
+
+Necesitamos saber cual es el ID o el enlace para el RDS:
+
+![image](IMG/12.png)
+
+```
+mysql -h epsilon-rds-rearch.<ID>.us-east-1.rds.amazonaws.com -u admin -p<CONTRASENA_RDS> accounts < src/main/resources/db_backup.sql
+```
+
+La constraseña viene en el apartado 8.4.3 al final del todo.
+
+Si hacemos un `SHOW tables;`
+
+![image](IMG/13.png)
+
+Si nos da este resultado, vamos a eliminar pues la instancia.
+Todo esto lo hacemos, solo porque la base de datos RDS es privada, y necesitamos pues estar en la misma red.
+
+## 8.8 Amazon Elastic Beanstalk.
+
+Vamos a recordar por un momento en "delta", cuando teníamos la instancia TomCat.
+- Creamos el grupo de seguridad y las par-claves.
+- Lanzamos la instancia e instalamos TomCat.
+- Creamos un "Target group", load balancer y todo bien, una AMI... etc, etc...
+
+Entonces, **Cuando creamos un "beanstalk enviroment", seleccionamos TomCat y pues nos proporciona todo lo anterior.** Un Autoscaling group, AMI, S3 bucket for the artifact, CloudWatch monitoring Logs, y es muy fácil cambiar los ajustes cuando quieras y el despliegue es muy fácil.
+
+Lo primero es crear roles IAM para Beanstalk.
+
+### 8.8.1 IAM, crear rol.
+
+En la barra de navegació buscamos IAM:
+
+- Tipo de entidad de confianza: `Servicio de AWS`.
+- Servicio o caso de uso: `EC2`
+- Caso de uso: `EC2`
+
+Agregar permisos:
+- AdministratorAccess-AWSElasticBeanstalk
+- AWSElasticBeanstalkCustomPlatformforEC2Role
+- AWSElasticBeanstalkRoleSNS
+- AWSElasticBeanstalkWebTier
+
+Detalles del rol:
+- Name: `epsilon-rearch-beanstalk-role`
+- Description: `epsilon-rearch-beanstalk-role`
+
+![image](IMG/14.png)
+
+### 8.8.2 Beanstalk, creación.
+Buscamos en la barra de navegación, "Elastic BeanStalk".
+
+Le damos a **Crear Aplicación**.
+
+#### PASO 1. Configuración del entorno.
+
+> 
+> - Nivel de entorno: `Entorno de servidor web`
+>
+> Información de la aplicación:
+> - Nombre:
+>   ```
+>   epsilon-rearch-beanapp
+>   ```
+>
+>Información del entorno:
+> - Nombre del entorno:
+>  ```
+>   Epsilon-rearch-beanapp-prod
+>  ```
+>  
+>- Dominio:
+>  ```
+>  epsilonrearch
+>  ```
+>  (tiene que ser único)
+>
+> Plataforma
+>- Tipo de plataforma: `Plataforma administrada.`
+>- Plataforma: `TomCat`
+>- Ramificación de la plataforma: `Tomcat 10 with Correto 21 running...`
+>- Versión: `5.3.3`
+>
+>Código de aplicación. (luego vamos a importar la página que tenemos)
+>- Aplicación de ejemplo.
+>
+>Valores preestablecidos
+>- Configuración personalizada
+>  
+
+#### PASO 2. Configuración del acceso al servicio.
+
+>
+>Acceso al Servicio:
+>- Rol de servicio: `Crear y utilizar un nuevo rol de servicio`
+>- Nombre del rol de servicio: "el que está por defecto" `aws-elasticbeanstalk-service-role`
+>- EC2 key pair: `epsilon-bean-key`
+>- EC2 perfil de instancia: `epsilon-rearch-beanstalk-role`
+**EL ROL QUE CREAMOS JUSTO EN EL 8.8.1**
+
+> [!WARNING]
+> Primero que nada, abre una ventana nueva con el AWS, vete a IAM > Roles, busca si NO ESTÁ CREADO DE ANTES EL ROL: `aws-elasticbeanstalk-service-role` si está creado de antes, bórralo, y continúa.
+> 
+
+#### PASO 3. Configuración del acceso al servicio.
+
+>VPC.
+>- VPC: `la default`
+>- Public IP address (**ACTIVATED**)
+>- Elegimos todas las subredes de instancia.
+>- Pero no marcamos ninguna en: "Elegir subredes de base de datos"
+>- Añadimos etiqueta, `Project` `Epsilon`
+
+#### PASO 4. Configuración del escalado y del tráfico de instancias - opcional
+
+>**Instancias**
+> - Tipo de volumen raíz: `(Valor predeterminado del contenedor)` voy a probar también el `Uso general 3 (SSD)`.
+> - Tamaño, IOPS, Rendimiento, es algo que no puedo modificar, si selecciono el predeterminado, pero si uso el general 3, si puedo, pero de todas formas, TAMPOCO voy a modificar nada.
+
+>[!WARNING]
+> **28 de octubre de 2024**
+>
+>Efectivamente, hay que usar el "Uso general 3 (SSD), para que funcione.
+
+> **Monitoreo de Amazon CloudWatch**
+> - 5 minutos.
+>
+> **Servicio de metadatos de insancia (IMDS).**
+> - Desactivada (ACTIVADO, CHECKED)
+>
+> **Grupos de seguridad de EC2.**
+> - No añadimos ni tocamos nada.
+>   
+> **Capacidad.**
+>Grupo de escalado automático
+>- Tipo de entorno: `Equilibrio de carga.`
+>- Instancias: `2Mín.` `4Máx.`
+>- Composición de la flota: `Instancias bajo demanda`
+>  
+>- Arquitectura: x86_64
+>  
+>- Tipo de instancia: `t2.micro`
+>
+>**Desencadenadores de escalado.**
+>- Métrica: `NetworkOut`
+> **NO VAMOS A PONER AHÍ EL GRUPO DE SEGURIDAD DE EC2**
+>
+> **Configuración de red del equilibrador de carga.**
+> - Visibilidad: `Público.`
+>
+> **Subredes del equilibrador de carga**
+> (Seleccionamos todos)
+>
+>**Tipo de equilibrador de carga**
+>- Equilibrador de carga de aplicación
+>- Dedicated
+>
+>**Agentes de escucha**
+>- Los dejamos por defecto.
+>
+>**Procesos**
+>- Añadimos un proceso:
+>  
+>![image](IMG/15.png)
+>
+>![image](IMG/16.png)
+>
+>![image](IMG/17.png)
+>
+> **Reglas** y **Acceso a los archivos de registro** `lo dejamos por defecto`
+>
+#### PASO 5. Configuración de actualizaciones, monitoreo y registros.
+
+> **Monitoreo**, **Actualizaciones administradas de la plataforma** y **Notificaciones por correo electrónico** `TODO POR DEFECTO`.
+> 
+> **Actualizaciones e implementaciones continuas**
+> - Política de implementación: `Continuo/Roling.`
+> - Tipo de tamaño de lote: `Porcentaje.`
+>
+>y ya en teoría está todo, creamos el beanstalk y si vemos el enlace:
+
+![image](IMG/18.png)
+
+>[!IMPORTANT]
+>Me da error:
+>
+>![image](IMG/19.png)
+>
+>Ahora, estoy viendo este error:
+>![image](IMG/20.png)
+>
+>El profesor, ha dicho que puede ser este:
+>
+>![image](IMG/21.png)
+>
+
+> [!IMPORTANT]
+> New accounts only support launch templates
+Starting on October 1, 2024, Amazon EC2 Auto Scaling will no longer support the creation of launch configurations for new accounts. Existing environments will not be impacted. For more information about other situations that are impacted, including temporary option settings required for new accounts, refer to Launch templates  in the Elastic Beanstalk Developer Guide.
+>
+> https://docs.aws.amazon.com/elasticbeanstalk/latest/dg/environments-cfg-autoscaling-launch-templates.html
+>
+
+### 8.8.3 Beanstalk. Resultado final del Beanstalk:
+
+El estado **TIENE QUE SER "OK", no Unknown u otra cosa**.
+
+![image](IMG/22.png)
+
+Y además, los eventos tiene que estar todos bien, nada en rojo:
+
+![image](IMG/23.png)
+
+Si vuelvo a acceder desde el enlace:
+
+![image](IMG/24.png)
+
+## 8.9 Hacer Update al grupo de Seguridad y ELB.
+
+Ahora, necesitamos que el grupo de seguridad del Backend (ElastiCache, Amazon MQ y Amazon RDS) permita conexión desde el grupo de seguridad de BeanStalk.
+
+Nos vamos al EC2 y tiene que haber creado 1 o varias instancias (dependiendo de las que le hemos puesto) para el Balanceador de Carga.
+
+![image](IMG/25.png)
+
+![image](IMG/26.png)
+
+Y voy a copiar el ID:
+```
+sg-05115073f7b066783
+```
+
+Ahora vamos a Grupos de Seguridad, y voy a editar el `epsilon-rearch-backend-sg`.
+
+![image](IMG/27.png)
+
+## 8.10 Construir y desplegar el artefacto.
+
+Como tal podríamos subirlo directamente al enviroment, es decir, nos vamos a Elastic Beanstalk, Enviroments:
+
+![image](IMG/28.png)
+
+![image](IMG/29.png)
+
+Primero tengo que construir mi artefacto. Y necesitamos asegurarnos que nuestro código contiene la información de los servicios de Backend.
+
+Primero necesito el EndPoint del RDS (Punto de enlace):
+```
+epsilon-rds-rearch.<ID>.us-east-1.rds.amazonaws.com
+```
+Ahora el del Amazon MQ:
+AMQP:
+```
+amqps://b-<ID>.mq.us-east-1.amazonaws.com:5671
+```
+Amazon ElastiCache:
+Punto de enlace de configuración:
+```
+epsilon-rearch-cache.<ID>.cfg.use1.cache.amazonaws.com:11211
+```
+
+Y ahora también el enlace al proyecto.
+```
+https://github.com/hkhcoder/vprofile-project.git
+```
+
+
+![image](IMG/30.png)
+
+
+Voy a abrir el VSCode.
+
+![image](IMG/31.png)
+
+y me pedirá escoger una carpeta en donde voy a clonar el repositorio:
+
+![image](IMG/32.png)
+
+Ahora voy a escoger la rama:
+
+![image](IMG/33.png)
+
+![image](IMG/34.png)
+
+Vamos a modificar estas cosas por, (teniendo en cuenta de que estamos en la Rama: "awsrefactor").
+
+Nos debería quedar algo así:
+
+```
+#JDBC Configutation for Database Connection
+jdbc.driverClassName=com.mysql.cj.jdbc.Driver
+jdbc.url=jdbc:mysql://epsilon-rds-rearch.<ID>.us-east-1.rds.amazonaws.com:3306/accounts?useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
+jdbc.username=admin
+jdbc.password=<CONTRASENA_RDS>
+
+#Memcached Configuration For Active and StandBy Host
+#For Active Host
+memcached.active.host=epsilon-rearch-cache.<ID>.cfg.use1.cache.amazonaws.com:11211
+memcached.active.port=11211
+#For StandBy Host
+memcached.standBy.host=127.0.0.2
+memcached.standBy.port=11211
+
+#RabbitMq Configuration
+rabbitmq.address=amqps://b-<ID>.mq.us-east-1.amazonaws.com:5671
+rabbitmq.port=5671
+rabbitmq.username=test
+rabbitmq.password=test
+
+#Elasticesearch Configuration
+elasticsearch.host=localhost
+elasticsearch.port=9300
+elasticsearch.cluster=rabbit
+elasticsearch.node=<CONTRASENA_RABBITMQ>
+```
+
+Guardamos el archivo y pulsamos CTRL + SHIFT + P.
+Y buscamos `select default terminal` y seleccionamos GitBash, abrimos la terminal.
+
+`mvn -version`
+
+![image](IMG/35.png)
+
+Tenemos que usar:
+- La versión de Maven `3.9.9`
+- La Java `17.0.12` o superior.
+
+Para ello:
+
+- ```
+  choco install corretto17jdk -y
+  ```
+Si hago un `mvn -version`.
+
+![image](IMG/36.png)
+
+Ahora simplemente hacemos un:
+- ```
+  mvn install
+  ```
+Y aquí tienemos ya el artefacto:
+
+![image](IMG/37.png)
+
+Me voy a Beanstalk y lo subo:
+
+![image](IMG/38.png)
+
+![image](IMG/39.png)
+
+Seleccionamos el .war y la versión será:
+
+![image](IMG/40.png)
+
+Como podemos comprobar, luego tras esperar un rato de que se haya actualizado/desplegado, podemos acceder vía Web:
+
+![image](IMG/41.png)
+
+>[!IMPORTANT]
+> Para iniciar sesión:
+>
+> - user:`admin_vp`
+> - password:`admin_vp`
+>
+>Si me da este error, es porque la BD no tiene los datos:
+>![image](IMG/42.png)
+>
+> Y tengo que volver a hacer lo de la instancia MySQL para meter los datos.
+>
+
+Y este es el resultado de lo demás:
+
